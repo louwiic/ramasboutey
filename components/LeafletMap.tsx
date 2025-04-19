@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet, Platform } from 'react-native';
-import { WebView } from 'react-native-webview';
+import React, { useEffect, useRef } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { WebView } from "react-native-webview";
 
 interface MapMarker {
   id: string;
@@ -20,10 +20,10 @@ interface LeafletMapProps {
   onMarkerPress?: (markerId: string) => void;
 }
 
-const LeafletMap: React.FC<LeafletMapProps> = ({ 
-  initialRegion, 
-  markers = [], 
-  onMarkerPress 
+const LeafletMap: React.FC<LeafletMapProps> = ({
+  initialRegion,
+  markers = [],
+  onMarkerPress,
 }) => {
   const webViewRef = useRef<WebView>(null);
 
@@ -92,11 +92,11 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   const handleMessage = (event: any) => {
     try {
       const data = JSON.parse(event.nativeEvent.data);
-      if (data.type === 'markerClick' && onMarkerPress) {
+      if (data.type === "markerClick" && onMarkerPress) {
         onMarkerPress(data.markerId);
       }
     } catch (error) {
-      console.error('Erreur de parsing JSON:', error);
+      console.error("Erreur de parsing JSON:", error);
     }
   };
 
@@ -104,7 +104,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     <View style={styles.container}>
       <WebView
         ref={webViewRef}
-        originWhitelist={['*']}
+        originWhitelist={["*"]}
         source={{ html: htmlContent }}
         style={styles.webview}
         onMessage={handleMessage}
@@ -122,7 +122,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   webview: {
     flex: 1,
